@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Trace;
 
 import java.io.*;
@@ -10,20 +11,14 @@ public class EX02_M1 {
 
     private static char newLineChar = '\n';
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException {
         String userId = args[0];
         int number_of_power_traces = Integer.parseInt(args[1]);
         String serverURL = args[2];
         String fileName = args[3];
-
-        String serverCommand = serverURL.concat("/encrypt?user=".concat(userId.concat("/")));
-
-        download_power_traces(fileName,serverCommand,number_of_power_traces);
-
-
-
-
+        String serverCommand = serverURL.concat("encrypt?user=".concat(userId.concat("/")));
+        download_power_traces(fileName, serverCommand, number_of_power_traces);
+        getMeansVariances(fileName);
     }
 
     public static void download_power_traces(String filename, String serverUrl, int number_of_power_Traces) throws IOException {
@@ -41,7 +36,10 @@ public class EX02_M1 {
         // Set request method to GET
         connection.setRequestMethod("GET");
         // Create a buffered reader to read from the response
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        int responseCOde = connection.getResponseCode();
+        InputStream inputStream = connection.getInputStream();
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
         String trace = bufferedReader.readLine();
         bufferedReader.close();
         return trace;
@@ -56,8 +54,9 @@ public class EX02_M1 {
         writer.close();
     }
 
-    public static void getMeansVariances(String filename) {
-
+    public static void getMeansVariances(String filename) throws IOException {
+        List<Trace> traces = readTracesFromFile(filename);
+        System.out.printf(traces.toString());
     }
 
     private static List<Trace> readTracesFromFile(String filename) throws IOException {
@@ -67,7 +66,8 @@ public class EX02_M1 {
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String traceJson;
         while ((traceJson = bufferedReader.readLine()) != null) {
-
+            ObjectMapper mapper = new ObjectMapper();
+            traces.add(mapper.readValue(traceJson, Trace.class));
         }
         return traces;
     }
