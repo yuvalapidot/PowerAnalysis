@@ -2,7 +2,6 @@ import model.Trace;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +10,15 @@ public class EX02_M1 {
 
     private static char newLineChar = '\n';
 
-    public void Main(String[] args) {
+    public static void main(String[] args) {
+
+        System.out.println(args[0]);
+        System.out.println(args[1]);
+
 
     }
 
-    public void download_power_traces(String filename, String serverUrl, int number_of_power_Traces) throws IOException {
+    public static void download_power_traces(String filename, String serverUrl, int number_of_power_Traces) throws IOException {
         String[] traces = new String[number_of_power_Traces];
         for (int i = 0; i < number_of_power_Traces; i++) {
             traces[i] = sendTraceRequest(serverUrl);
@@ -23,7 +26,7 @@ public class EX02_M1 {
         writeTracesToFile(filename, traces);
     }
 
-    private String sendTraceRequest(String serverUrl) throws IOException {
+    private static String sendTraceRequest(String serverUrl) throws IOException {
         URL urlObject = new URL(serverUrl);
         // Establish the connection
         HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
@@ -36,7 +39,7 @@ public class EX02_M1 {
         return trace;
     }
 
-    private void writeTracesToFile(String filename, String[] traces) throws IOException {
+    private static void writeTracesToFile(String filename, String[] traces) throws IOException {
         File file = new File(filename);
         FileWriter writer = new FileWriter(file);
         for (String trace : traces) {
@@ -45,11 +48,11 @@ public class EX02_M1 {
         writer.close();
     }
 
-    public void getMeansVariances(String filename) {
+    public static void getMeansVariances(String filename) {
 
     }
 
-    private List<Trace> readTracesFromFile(String filename) throws IOException {
+    private static List<Trace> readTracesFromFile(String filename) throws IOException {
         List<Trace> traces = new ArrayList<>();
         File file = new File(filename);
         FileReader fileReader = new FileReader(file);
