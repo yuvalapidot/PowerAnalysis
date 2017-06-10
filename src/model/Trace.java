@@ -6,7 +6,13 @@ package model;
 public class Trace
 {
     private String PlainText;
-    private double [] traices = new double[64];
+    private double [] traces;
+
+    public Trace()
+    {
+        this.PlainText = "";
+        this.traces = new double[64];
+    }
 
     public void SetPlainText(String TmpPlain)
     {
@@ -15,7 +21,7 @@ public class Trace
 
     public void SetTraices(double [] TmpTraices)
     {
-        traices = TmpTraices;
+        traces = TmpTraices;
     }
 
     public String GetPlainText()
@@ -25,7 +31,7 @@ public class Trace
 
     public double [] GetTraices()
     {
-        return traices;
+        return traces;
     }
 
 }
