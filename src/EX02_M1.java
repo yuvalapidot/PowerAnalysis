@@ -1,11 +1,15 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import model.Trace;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EX02_M1 {
+
+    private static char newLineChar = '\n';
 
     public void Main(String[] args) {
 
@@ -16,7 +20,7 @@ public class EX02_M1 {
         for (int i = 0; i < number_of_power_Traces; i++) {
             traces[i] = sendTraceRequest(serverUrl);
         }
-
+        writeTracesToFile(filename, traces);
     }
 
     private String sendTraceRequest(String serverUrl) throws IOException {
@@ -32,7 +36,28 @@ public class EX02_M1 {
         return trace;
     }
 
+    private void writeTracesToFile(String filename, String[] traces) throws IOException {
+        File file = new File(filename);
+        FileWriter writer = new FileWriter(file);
+        for (String trace : traces) {
+            writer.write(trace + newLineChar);
+        }
+        writer.close();
+    }
+
     public void getMeansVariances(String filename) {
 
+    }
+
+    private List<Trace> readTracesFromFile(String filename) throws IOException {
+        List<Trace> traces = new ArrayList<>();
+        File file = new File(filename);
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String traceJson;
+        while ((traceJson = bufferedReader.readLine()) != null) {
+
+        }
+        return traces;
     }
 }
