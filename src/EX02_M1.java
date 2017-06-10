@@ -12,8 +12,16 @@ public class EX02_M1 {
 
     public static void main(String[] args) {
 
-        System.out.println(args[0]);
-        System.out.println(args[1]);
+        String userId = args[0];
+        int number_of_power_traces = Integer.parseInt(args[1]);
+        String serverURL = args[2];
+        String fileName = args[3];
+
+        String serverCommand = serverURL.concat("/encrypt?user=".concat(userId.concat("/")));
+
+        download_power_traces(fileName,serverCommand,number_of_power_traces);
+
+
 
 
     }
