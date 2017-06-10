@@ -19,7 +19,7 @@ public class Trace
         PlainText = TmpPlain;
     }
 
-    public void SetTraices(double [] TmpTraices)
+    public void SetTraces(double [] TmpTraices)
     {
         traces = TmpTraices;
     }
@@ -29,7 +29,7 @@ public class Trace
         return PlainText;
     }
 
-    public double [] GetTraices()
+    public double [] GetTraces()
     {
         return traces;
     }
